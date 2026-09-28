@@ -7,6 +7,7 @@ export const apiRouter = Router();
 
 apiRouter.get('/me', requireAuth, (req, res) => {
   const { id, username, globalName, avatar } = req.user;
+  res.set('Cache-Control', 'no-store');
   res.json({ user: { id, username, globalName, avatar } });
 });
 
@@ -39,7 +40,12 @@ apiRouter.get('/guilds/:guildId/overview', requireAuth, async (req, res, next) =
     // The Horichan API must independently verify that Horichan is in this guild
     // and that the caller is authorized for the requested operation.
     const overview = await horichanRequest(`/guilds/${encodeURIComponent(guild.id)}/overview`);
-    return res.json({ guild, botConnected: true, integrationConfigured: true, overview });
+    return res.json({
+      guild,
+      botConnected: typeof overview?.botConnected === 'boolean' ? overview.botConnected : null,
+      integrationConfigured: true,
+      overview,
+    });
   } catch (error) {
     return next(error);
   }
