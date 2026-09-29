@@ -29,7 +29,7 @@ Every request uses `Authorization: Bearer <HORICHAN_API_TOKEN>` and receives `Ca
 - `GET /api/v1/health` — bot readiness, guild count, and process uptime.
 - `GET /api/v1/guilds/:guildId/overview` — minimal guild details and bot identity/status.
 
-Guild IDs must be Discord snowflakes. Horichan checks the bot's own Discord access for the requested guild. Unknown or inaccessible guilds return `404 guild_not_found`. The API does not expose member lists, roles, channels, or user OAuth data. It is read-only; no moderation or configuration actions are exposed yet.
+Guild IDs must be Discord snowflakes. Horichan checks the bot's own Discord access for the requested guild. If the bot cannot access it, the overview returns `200` with `guild: null` and `bot.connected: false`. The API does not expose member lists, roles, channels, or user OAuth data. It is read-only; no moderation or configuration actions are exposed yet.
 
 The bot API binds to loopback by default. If Sentinel runs on another host, use an HTTPS-protected private connection or authenticated tunnel and restrict ingress to Sentinel. Do not expose the API directly to the public internet.
 

@@ -37,8 +37,8 @@ apiRouter.get('/guilds/:guildId/overview', requireAuth, async (req, res, next) =
       });
     }
 
-    // The Horichan API must independently verify that Horichan is in this guild
-    // and that the caller is authorized for the requested operation.
+    // Sentinel has checked the signed-in user's current Discord permissions.
+    // Horichan independently verifies its own access with the bot credentials.
     const overview = await horichanRequest(`/api/v1/guilds/${encodeURIComponent(guild.id)}/overview`);
     const botConnected = overview?.bot?.connected === true;
     return res.json({
