@@ -9,10 +9,10 @@
 - [x] CI workflow, linting, and smoke tests
 
 ## Integration work
-- [ ] Confirm and document the actual Horichan management API contract
-- [ ] Verify bot membership and permissions for each selected guild
+- [x] Confirm and document the actual Horichan management API contract
+- [x] Verify current user permissions and Horichan bot membership for each requested guild
+- [x] Add server overview from the real Horichan API
 - [ ] Add a persistent production session store
-- [ ] Add server overview and bot health from the real API
 - [ ] Add moderation cases and action history
 - [ ] Add audit-log browsing
 - [ ] Add channel and role management with permission checks
@@ -20,4 +20,4 @@
 - [ ] Add tests for every authorization-sensitive endpoint
 - [ ] Add deployment documentation and operational monitoring
 
-A roadmap item is not complete merely because a UI placeholder exists.
+The Horichan API v1 currently provides health and read-only server overview data. Other management features remain incomplete until backed by explicit API operations and authorization checks.

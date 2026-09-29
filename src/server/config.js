@@ -10,7 +10,7 @@ const schema = z.object({
   DISCORD_REDIRECT_URI: z.string().url().default('http://localhost:3000/auth/discord/callback'),
   SESSION_SECRET: z.string().optional().default(''),
   HORICHAN_API_BASE_URL: z.string().url().optional().or(z.literal('')).default(''),
-  HORICHAN_API_TOKEN: z.string().optional().default(''),
+  HORICHAN_API_TOKEN: z.string().optional().default('').refine((value) => value.length === 0 || value.length >= 32, { message: 'must be at least 32 characters' }),
 });
 
 const parsed = schema.safeParse(process.env);
