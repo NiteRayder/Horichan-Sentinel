@@ -1,0 +1,38 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/health",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "SESSION_SECRET",
+      "description": "Signing secret for express-session cookies. A development placeholder is generated automatically; replace with a strong 32+ char value for any real use.",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": true
+    },
+    {
+      "name": "DISCORD_CLIENT_ID",
+      "description": "Discord OAuth2 client ID from the Discord Developer Portal (General Settings page). Required for Discord sign-in to work.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "DISCORD_CLIENT_SECRET",
+      "description": "Discord OAuth2 client secret from the Discord Developer Portal (General Settings page). Required for Discord sign-in to work.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "DISCORD_REDIRECT_URI",
+      "description": "OAuth2 redirect URI. For the preview, use https://3000-${BASE44_PUBLIC_HOST_SUFFIX}/auth/discord/callback. Must be added to the Discord app's OAuth2 Redirects list.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "HORICHAN_API_BASE_URL",
+      "description": "Base URL of the Horichan bot's read-only management API (v1). Optional; the adapter stays fail-closed when unset.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "HORICHAN_API_TOKEN",
+      "description": "Shared bearer token for the Horichan API (at least 32 characters). Must match the token configured in the bot. Optional.",
+      "requiredAtBoot": false
+    }
+  ]
+}
