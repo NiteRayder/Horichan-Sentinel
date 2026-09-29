@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Dashboard from './Dashboard.jsx';
 
 function Icon({ name, size = 18 }) {
   const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true };
@@ -95,32 +96,5 @@ export default function App() {
     <footer className="page-footer"><span>HORICHAN SENTINEL</span><span>HORIZON FORGE STUDIOS © {new Date().getFullYear()}</span></footer>
   </main>;
 
-  return <div className="app-shell">
-    <aside className="sidebar">
-      <Brand />
-      <div className="side-section-label">WORKSPACE</div>
-      <button className="nav-item active"><Icon name="grid" /> Overview</button>
-      <button className="nav-item" onClick={() => setError('Choose a server first. Management modules will appear when the Horichan API is connected.')}><Icon name="server" /> Servers <span className="nav-count">{guilds.length}</span></button>
-      <div className="sidebar-bottom">
-        <div className="sidebar-note"><span className="status-dot" /> Dashboard online <small>Bot integration may be pending</small></div>
-        <button className="nav-item" onClick={logout}><Icon name="logout" /> Sign out</button>
-      </div>
-    </aside>
-    <main className="dashboard-main">
-      <header className="topbar"><div><div className="breadcrumb">HORICHAN SENTINEL <span>/</span> OVERVIEW</div><h1>Dashboard</h1></div>
-        <div className="profile"><div className="avatar">{user.avatar ? <img src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`} alt="" /> : user.username.slice(0, 1).toUpperCase()}</div><div><strong>{user.globalName || user.username}</strong><small>Discord account</small></div></div>
-      </header>
-      {error && <div className="notice"><span>{error}</span><button onClick={() => setError('')} aria-label="Dismiss">×</button></div>}
-      <section className="welcome-panel"><div><div className="eyebrow">YOUR WORKSPACE</div><h2>Welcome back, {user.globalName || user.username}.</h2><p>Select a server to view its Horichan integration status.</p></div><div className="welcome-mark"><Icon name="shield" size={38} /></div></section>
-      <div className="section-heading"><div><h2>Your servers</h2><p>Servers where your Discord account has management permissions.</p></div><span className="count-pill">{guilds.length} FOUND</span></div>
-      {guilds.length ? <div className="guild-grid">{guilds.map((guild) => <button className={`guild-card ${selected?.id === guild.id ? 'selected' : ''}`} key={guild.id} onClick={() => chooseGuild(guild)}>
-        <div className="guild-avatar">{guild.icon ? <img src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=96`} alt="" /> : guild.name.slice(0, 1).toUpperCase()}</div>
-        <div className="guild-details"><strong>{guild.name}</strong><small>{guild.owner ? 'Server owner' : 'Manage Server access'}</small></div><Icon name="arrow" size={17} />
-      </button>)}</div> : <div className="empty-state"><div className="empty-icon"><Icon name="server" size={25} /></div><h3>No eligible servers yet</h3><p>Make sure your Discord account has Manage Server or Administrator permission in a server.</p></div>}
-      {selected && <section className="server-panel"><div className="section-heading"><div><h2>{selected.name}</h2><p>Integration status</p></div><span className="count-pill">SERVER ID · {selected.id}</span></div>
-        {!overview ? <p className="muted">Loading server overview…</p> : <div className="integration-status"><div className="status-symbol"><Icon name="shield" size={22} /></div><div><strong>{!overview.integrationConfigured ? 'Waiting for Horichan connection' : overview.botConnected ? 'Horichan is in this server' : 'Horichan is unavailable'}</strong><p>{overview.message || 'Server access is verified. Management modules will remain unavailable until their API endpoints are implemented.'}</p></div><span className={overview.botConnected ? 'pill-ready' : 'pill-pending'}>{!overview.integrationConfigured ? 'PENDING' : overview.botConnected ? 'BOT ONLINE' : 'BOT OFFLINE'}</span></div>}
-      </section>}
-      <footer className="dashboard-footer"><span>HORICHAN SENTINEL <b>·</b> HORIZON FORGE STUDIOS</span><span><span className="status-dot" /> Secure session</span></footer>
-    </main>
-  </div>;
+  return <Dashboard user={user} guilds={guilds} selected={selected} setSelected={setSelected} overview={overview} chooseGuild={chooseGuild} logout={logout} error={error} setError={setError} />;
 }
