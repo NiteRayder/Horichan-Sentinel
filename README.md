@@ -51,7 +51,7 @@ The browser must never receive a Discord client secret, bot token, session secre
 
 ## Horichan API integration
 
-Set `HORICHAN_API_BASE_URL` and `HORICHAN_API_TOKEN` only when a trusted Horichan management API exists and is configured. The adapter is intentionally fail-closed when no API is configured. Do not treat user-submitted server IDs as authorization; the backend must verify both the user's Discord permissions and the bot's access to that guild before every management action.
+Horichan exposes a versioned, read-only API for health and server overviews. Configure `HORICHAN_API_BASE_URL` and a strong `HORICHAN_API_TOKEN` in Sentinel; configure the same token in the bot. The API should be reachable only through localhost or a private HTTPS connection. The adapter remains fail-closed when configuration is missing. Sentinel rechecks the user's current Discord permissions for every guild overview request, and Horichan independently verifies its own guild access. The browser never receives the service token. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the v1 contract.
 
 ## Scripts
 

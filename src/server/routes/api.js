@@ -39,11 +39,15 @@ apiRouter.get('/guilds/:guildId/overview', requireAuth, async (req, res, next) =
 
     // The Horichan API must independently verify that Horichan is in this guild
     // and that the caller is authorized for the requested operation.
-    const overview = await horichanRequest(`/guilds/${encodeURIComponent(guild.id)}/overview`);
+    const overview = await horichanRequest(`/api/v1/guilds/${encodeURIComponent(guild.id)}/overview`);
+    const botConnected = overview?.bot?.connected === true;
     return res.json({
       guild,
-      botConnected: typeof overview?.botConnected === 'boolean' ? overview.botConnected : null,
+      botConnected,
       integrationConfigured: true,
+      message: botConnected
+        ? `Horichan is connected to ${guild.name}.`
+        : `Horichan did not report a connection to ${guild.name}.`,
       overview,
     });
   } catch (error) {
