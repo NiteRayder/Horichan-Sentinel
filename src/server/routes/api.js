@@ -47,7 +47,7 @@ apiRouter.get('/guilds/:guildId/overview', requireAuth, async (req, res, next) =
       integrationConfigured: true,
       message: botConnected
         ? `Horichan is connected to ${guild.name}.`
-        : `Horichan did not report a connection to ${guild.name}.`,
+        : `Horichan could not access ${guild.name} when the overview was requested.`,
       overview,
     });
   } catch (error) {
